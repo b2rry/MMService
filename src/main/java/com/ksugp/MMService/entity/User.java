@@ -1,9 +1,10 @@
 package com.ksugp.MMService.entity;
 
 import jakarta.persistence.*;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "users_table")
 public class User {
     @Id
@@ -12,64 +13,17 @@ public class User {
     private Long id;
     @Column(name = "user_username")
     private String username;
-    @Transient
+    @Column(name = "user_password")
     private String password;
     @Column(name = "user_email")
     private String email;
     @Column(name = "user_info")
     private String info;
+    @Column(name = "user_role")
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+    @Column(name = "user_status")
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
 
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", info='" + info + '\'' +
-                '}';
-    }
 }

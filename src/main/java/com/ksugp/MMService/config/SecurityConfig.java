@@ -1,16 +1,18 @@
 package com.ksugp.MMService.config;
 
-import com.ksugp.MMService.entity.Role;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -18,6 +20,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig{
+    @Autowired
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -33,7 +42,7 @@ public class SecurityConfig{
 //                .requestMatchers(HttpMethod.DELETE,"/service/**").hasAuthority(Permission.USERS_WRITE.getPermission())
 //                .requestMatchers(HttpMethod.PUT,"/service/**").hasAuthority(Permission.USERS_WRITE.getPermission())
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/auth/login").permitAll()
@@ -44,30 +53,37 @@ public class SecurityConfig{
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/auth/login");
-
+                .logoutSuccessUrl("/");
 
         return http.build();
     }
-    @Bean
-    protected UserDetailsService userDetailsService(){
-        return new InMemoryUserDetailsManager(
-                User.builder().
-                        username("admin").
-                        password(passwordEncoder().encode("admin"))
-//                        .roles(Role.ADMIN.name()) без пермишнов
-                        .authorities(Role.ADMIN.getAuthorities())
-                        .build(),
-                User.builder().
-                        username("user").
-                        password(passwordEncoder().encode("user"))
-//                        .roles(Role.USER.name())
-                        .authorities(Role.USER.getAuthorities())
-                        .build()
-        );
-    }
+
+//    @Bean
+//    protected UserDetailsService userDetailsService(){
+//        return new InMemoryUserDetailsManager(
+//                User.builder().
+//                        username("admin").
+//                        password(passwordEncoder().encode("admin"))
+////                        .roles(Role.ADMIN.name()) без пермишнов
+//                        .authorities(Role.ADMIN.getAuthorities())
+//                        .build(),
+//                User.builder().
+//                        username("user").
+//                        password(passwordEncoder().encode("user"))
+////                        .roles(Role.USER.name())
+//                        .authorities(Role.USER.getAuthorities())
+//                        .build()
+//        );
+//    }
     @Bean
     protected PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(12);
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(){ //источник - https://stackoverflow.com/questions/74877743/spring-security-6-0-dao-authentication
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return new ProviderManager(daoAuthenticationProvider);
     }
 }
