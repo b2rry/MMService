@@ -1,26 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>service</title>
+    <title>service_page</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
-  <h1>SHOK =)</h1>
+  <h1>Service page</h1>
+  <a href="/">Main page</a>
   <br>
-  <form action="/service/show" method="GET">
-      <button type="submit">1</button>
+  <h3>Test buttons</h3>
+  <form action="/settings/show" method="GET">
+      <button type="submit">GET JSON Users</button>
   </form>
-  <form action="/service/show" method="GET">
-      <button type="submit">2</button>
+  <form action="/service/users" method="GET">
+      <button type="submit">GET List<> Users</button>
   </form>
-  <form action="/service/login" method="POST">
-      <button type="submit">3</button>
+  <form action="/service/add" method="GET">
+      <button type="submit">GET ADD FORM</button>
   </form>
-  <form action="/service/login" method="POST">
-      <button type="submit">4</button>
-  </form>
-  <form action="/service/login" method="POST">
-      <button type="submit">5</button>
-  </form>
+  <br>
+  <h2>Users</h2>
+  <table>
+
+      <tr>
+          <th>Number</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Action</th>
+      </tr>
+
+      {{#usersList}}
+      <tr>
+          <td>{{num}}</td>
+          <td>{{username}}</td>
+          <td>{{email}}</td>
+          <td><a href = "/service/user/{{num}}/{{id}}">Search</a></td>
+      </tr>
+      {{/usersList}}
+
+  </table>
 </body>
 </html>

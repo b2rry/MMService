@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add_form</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+</head>
+<body>
+  <form action="/settings/add" method="POST" enctype="application/json" accept="">
+      <h4>Fill the User form</h4>
+      <p>
+          <label for="username">Username</label>
+          <input id="username" type="text" name="username" required>
+      </p>
+      <p>
+          <label for="email">Email</label>
+          <input id="email" type="text" name="email" value="example@email" required>
+      </p>
+      <p>
+          <label for="info">Info</label>
+          <input id="info" type="text" name="info" value="NO INFO" required>
+      </p>
+      <p>
+          <label for="active_status">Active</label>
+          <input id="active_status" type="radio" name="status" value="ACTIVE">
+          <label for="banned_status">Banned</label>
+          <input id="banned_status" type="radio" name="status" value="BANNED">
+      </p>
+    <button type="submit">SAVE</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,22 @@
+body{
+  background-color: #1C1C1C;
+  margin: central;
+  color: #51FF3A;
+  margin-left:10px;
+  font-family: Arial, sans-serif;
+  font-weight: 600
+}
+a:link {
+  text-decoration: none;
+  color: #28AAFF;
+}
+a:visited {
+  text-decoration: none;
+  color: #0069AF;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:active {
+  text-decoration: underline;
+}

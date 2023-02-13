@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users_output</title>
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+</head>
+<body>
+{{#oneUser}}
+<h2>User {{num}}</h2>
+{{/oneUser}}
+<table>
+
+  {{#oneUser}}
+  <tr>
+    <td>Id </td>
+    <td>'{{id}}'</td>
+  </tr>
+  <tr>
+    <td>Username </td>
+    <td>'{{username}}'</td>
+  </tr>
+  <tr>
+    <td>Email </td>
+    <td>'{{email}}'</td>
+  </tr>
+  <tr>
+    <td>Info </td>
+    <td>'{{info}}'</td>
+  </tr>
+  <tr>
+    <td>Role </td>
+    <td>'{{role}}'</td>
+  </tr>
+  <tr>
+    <td>Status </td>
+    <td>'{{status}}'</td>
+  </tr>
+
+  {{/oneUser}}
+
+</table>
+<br>
+<a href="/service">Back</a>
+<br>
+<a href="/">Main page</a>
+</body>
+</html>

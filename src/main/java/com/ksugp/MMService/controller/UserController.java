@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/service")
+@RequestMapping("/settings")
 public class UserController {
     @Autowired
     private final UserService userService;
@@ -19,13 +19,13 @@ public class UserController {
     }
 
     @GetMapping("/show")
-    @PreAuthorize("hasAuthority('users:read')")
+    @PreAuthorize("hasAuthority('users:write')")
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @GetMapping("/show/{userId}")
-    @PreAuthorize("hasAuthority('users:read')")
+    @PreAuthorize("hasAuthority('users:write')")
     public Optional<User> getUser(@PathVariable Long userId){
         return userService.getUser(userId);
     }
@@ -48,4 +48,4 @@ public class UserController {
         userService.updateUser(user,userId);
     }
 }
-//45 минута видео
+//1ч16мин видео
