@@ -7,6 +7,22 @@ import lombok.Data;
 @Data
 @Table(name = "users_table")
 public class User {
+    public User(){}
+    public User(String username, String password, String email, String info, Role role, Status status) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.info = info;
+        this.role = role;
+        this.status = status;
+    }
+    public User(String username, String email, String info, Role role, Status status) {
+        this.username = username;
+        this.email = email;
+        this.info = info;
+        this.role = role;
+        this.status = status;
+    }
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,18 +9,14 @@
   <h1>Service page</h1>
   <a href="/">Main page</a>
   <br>
-  <h3>Test buttons</h3>
   <form action="/settings/show" method="GET">
-      <button type="submit">GET JSON Users</button>
-  </form>
-  <form action="/service/users" method="GET">
-      <button type="submit">GET List<> Users</button>
-  </form>
-  <form action="/service/add" method="GET">
-      <button type="submit">GET ADD FORM</button>
+      <button type="submit">GET JSON Users (test)</button>
   </form>
   <br>
   <h2>Users</h2>
+  <form action="/service/add" method="GET">
+      <button type="submit">Add User</button>
+  </form>
   <table>
 
       <tr>
@@ -35,7 +31,7 @@
           <td>{{num}}</td>
           <td>{{username}}</td>
           <td>{{email}}</td>
-          <td><a href = "/service/user/{{num}}/{{id}}">Search</a></td>
+          <td><a href = "/service/user/{{num}}/{{id}}">Expand</a></td>
       </tr>
       {{/usersList}}
 

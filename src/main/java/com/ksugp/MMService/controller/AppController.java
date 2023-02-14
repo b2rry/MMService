@@ -1,17 +1,12 @@
 package com.ksugp.MMService.controller;
 
-import com.ksugp.MMService.entity.SafeOutputUser;
-import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.entity.SafeUser;
 import com.ksugp.MMService.service.UserService;
-import org.apache.catalina.startup.SafeForkJoinWorkerThreadFactory;
-import org.springframework.beans.NullValueInNestedPathException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,39 +23,53 @@ public class AppController {
     }
     @PreAuthorize("hasAuthority('users:read')")
     @GetMapping
-    public String getAllActions(Model model) {
-        List<User> usersList = userService.getAllUsers();
-        int num = 1;
-        List<SafeOutputUser> sUsers = new ArrayList<>();
-        for(User user : usersList){
-            sUsers.add(makeSafeUser(user, num));
-            num++;
-        }
+    public String showServicePage(Model model) {
+        List<SafeUser> sUsers = userService.getSafeUsersList();
         model.addAttribute("usersList",sUsers);
         return "service";
     }
     @PreAuthorize("hasAuthority('users:read')")
-    @GetMapping("/users")
-    public String showUsersPage(Model model) {
-        List<User> usersList = userService.getAllUsers();
-        model.addAttribute("usersList",usersList);
-        return "users";
-    }
-    @PreAuthorize("hasAuthority('users:write')")
     @GetMapping("/user/{userNum}/{userId}")
     public String showUserPage(@PathVariable int userNum, @PathVariable Long userId, Model model) {
-        Optional<User> user = userService.getUser(userId);
-
-        SafeOutputUser sUser = makeSafeUser(user.get(),userNum);
+        SafeUser sUser = userService.getSafeUser(userId, userNum);
         model.addAttribute("oneUser", sUser);
         return "user";
     }
     @PreAuthorize("hasAuthority('users:write')")
     @GetMapping("/add")
-    public String addUser() {
+    public String showAddUserForm() {
         return "addForm";
     }
-    private SafeOutputUser makeSafeUser(User user,int num){
-        return new SafeOutputUser(num, user.getId(), user.getUsername(), user.getEmail(), user.getInfo(), user.getRole(), user.getStatus());
+    @PreAuthorize("hasAuthority('users:write')")
+    @PostMapping("/add")
+    public String takeUserForm(@ModelAttribute("user") SafeUser safeUser){
+        userService.saveUser(safeUser);//перегруженный метод
+        return "successAdd";
+    }
+    @PreAuthorize("hasAuthority('users:write')")
+    @GetMapping("/change/{userId}")
+    public String showChangeUserForm(@PathVariable Long userId, Model model) {
+        model.addAttribute("user",userService.getSafeUser(userId,0));
+        return "changeUserForm";
+    }
+    @PreAuthorize("hasAuthority('users:write')")
+    @PostMapping("/change/{userId}")
+    public String ChangeUser(@ModelAttribute("user") SafeUser safeUser,@PathVariable Long userId){
+        safeUser.setId(userId);
+        System.out.println(safeUser);
+        userService.createUser(safeUser);
+        return "successChange";
+    }
+    @PreAuthorize("hasAuthority('users:write')")
+    @GetMapping("/delete/{userId}")
+    public String showDeleteUserForm(@PathVariable Long userId, Model model) {
+        model.addAttribute("userId",userId);
+        return "deleteUserForm";
+    }
+    @PreAuthorize("hasAuthority('users:write')")
+    @PostMapping("/delete/{userId}")
+    public String deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return "successDelete";
     }
 }

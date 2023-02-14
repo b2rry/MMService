@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
-  <form action="/settings/add" method="POST" enctype="application/json" accept="">
+  <form action="/service/add" method="POST" modelAttribute="user">
       <h4>Fill the User form</h4>
       <p>
           <label for="username">Username</label>
@@ -14,11 +14,7 @@
       </p>
       <p>
           <label for="email">Email</label>
-          <input id="email" type="text" name="email" value="example@email" required>
-      </p>
-      <p>
-          <label for="info">Info</label>
-          <input id="info" type="text" name="info" value="NO INFO" required>
+          <input id="email" type="text" name="email" required>
       </p>
       <p>
           <label for="active_status">Active</label>
@@ -28,5 +24,7 @@
       </p>
     <button type="submit">SAVE</button>
   </form>
+  <br>
+  <a href="/service">Back</a>
 </body>
 </html>

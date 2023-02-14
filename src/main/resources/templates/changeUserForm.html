@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add_form</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+</head>
+<body>
+{{#user}}
+<form action="/service/change/{{id}}" method="POST" modelAttribute="user">
+    <h4>Change the User form</h4>
+    <p>Id: {{id}}</p>
+    <p>
+        <label for="username">Username:</label>
+        <input id="username" type="text" name="username" value="{{username}}" required>
+    </p>
+    <p>
+        <label for="email">Email:</label>
+        <input id="email" type="text" name="email" value="{{email}}" required>
+    </p>
+    <p>
+        <label for="info">Info:</label>
+        <input id="info" type="text" name="info" value="{{info}}" required>
+    </p>
+    <p>
+        <label for="active_status">Active</label>
+        <input id="active_status" type="radio" name="status" value="ACTIVE">
+        <label for="banned_status">Banned</label>
+        <input id="banned_status" type="radio" name="status" value="BANNED">
+    </p>
+    <button type="submit">SAVE</button>
+</form>
+{{/user}}
+<br>
+<a href="/service">Back</a>
+</body>
+</html>
