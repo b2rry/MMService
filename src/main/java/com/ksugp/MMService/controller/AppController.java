@@ -36,24 +36,24 @@ public class AppController {
         return "user";
     }
     @PreAuthorize("hasAuthority('users:write')")
-    @GetMapping("/add")
+    @GetMapping("/user/add")
     public String showAddUserForm() {
         return "addForm";
     }
     @PreAuthorize("hasAuthority('users:write')")
-    @PostMapping("/add")
+    @PostMapping("/user/add")
     public String takeUserForm(@ModelAttribute("user") SafeUser safeUser){
         userService.saveUser(safeUser);//перегруженный метод
         return "successAdd";
     }
     @PreAuthorize("hasAuthority('users:write')")
-    @GetMapping("/change/{userId}")
+    @GetMapping("/user/change/{userId}")
     public String showChangeUserForm(@PathVariable Long userId, Model model) {
         model.addAttribute("user",userService.getSafeUser(userId,0));
         return "changeUserForm";
     }
     @PreAuthorize("hasAuthority('users:write')")
-    @PostMapping("/change/{userId}")
+    @PostMapping("/user/change/{userId}")
     public String ChangeUser(@ModelAttribute("user") SafeUser safeUser,@PathVariable Long userId){
         safeUser.setId(userId);
         System.out.println(safeUser);
@@ -61,13 +61,13 @@ public class AppController {
         return "successChange";
     }
     @PreAuthorize("hasAuthority('users:write')")
-    @GetMapping("/delete/{userId}")
+    @GetMapping("/user/delete/{userId}")
     public String showDeleteUserForm(@PathVariable Long userId, Model model) {
         model.addAttribute("userId",userId);
         return "deleteUserForm";
     }
     @PreAuthorize("hasAuthority('users:write')")
-    @PostMapping("/delete/{userId}")
+    @PostMapping("/user/delete/{userId}")
     public String deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return "successDelete";

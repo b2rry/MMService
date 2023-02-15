@@ -32,7 +32,8 @@ public class SecurityConfig{
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/").permitAll()
+                .requestMatchers("/*").permitAll()
+                .requestMatchers("/css/**").permitAll()
 //                .requestMatchers(HttpMethod.GET,"/service/**").hasAnyRole(Role.ADMIN.name(),Role.USER.name()) без пермишнов
 //                .requestMatchers(HttpMethod.POST,"/service/**").hasRole(Role.ADMIN.name())
 //                .requestMatchers(HttpMethod.DELETE,"/service/**").hasRole(Role.ADMIN.name())
@@ -42,11 +43,11 @@ public class SecurityConfig{
 //                .requestMatchers(HttpMethod.DELETE,"/service/**").hasAuthority(Permission.USERS_WRITE.getPermission())
 //                .requestMatchers(HttpMethod.PUT,"/service/**").hasAuthority(Permission.USERS_WRITE.getPermission())
                 .anyRequest()
-                .permitAll()
+                .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/auth/login").permitAll()
-                .defaultSuccessUrl("/auth/success")
+                .defaultSuccessUrl("/auth/success", true)
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
