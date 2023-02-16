@@ -1,5 +1,6 @@
 package com.ksugp.MMService.Security;
 
+import com.ksugp.MMService.entity.Role;
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
@@ -17,6 +18,7 @@ import org.springframework.web.util.WebUtils;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public class JwtTokenProvider {
@@ -66,7 +68,7 @@ public class JwtTokenProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
     public String resolveToken(HttpServletRequest request){
-        //return request.getHeader(authorizationHeader);
+        //return request.getHeader(authorizationHeader); //для хранения токена в хедере
         Cookie cookie = WebUtils.getCookie(request, cookieName);
         return cookie != null ? cookie.getValue() : null;
     }

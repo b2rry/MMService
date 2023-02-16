@@ -8,9 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/service")
@@ -21,6 +19,7 @@ public class AppController {
     public AppController(UserService userService) {
         this.userService = userService;
     }
+
     @PreAuthorize("hasAuthority('users:read')")
     @GetMapping
     public String showServicePage(Model model) {
@@ -38,7 +37,7 @@ public class AppController {
     @PreAuthorize("hasAuthority('users:write')")
     @GetMapping("/user/add")
     public String showAddUserForm() {
-        return "addForm";
+        return "addUserForm";
     }
     @PreAuthorize("hasAuthority('users:write')")
     @PostMapping("/user/add")
