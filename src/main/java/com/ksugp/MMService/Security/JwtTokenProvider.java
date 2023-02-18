@@ -1,6 +1,7 @@
 package com.ksugp.MMService.Security;
 
 import com.ksugp.MMService.entity.Role;
+import com.ksugp.MMService.entity.SafeUser;
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
@@ -16,9 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
-import java.util.Base64;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class JwtTokenProvider {
@@ -40,9 +39,11 @@ public class JwtTokenProvider {
     protected void init(){
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
-    public String createToken(String username,String role){
+    public String createToken(String username/*это email*/, String role, /*это username*/String actualUsername, Long id){
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
+        claims.put("actualUsername", actualUsername);
+        claims.put("id", String.valueOf(id));
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds * 1000);
         return Jwts.builder()
@@ -66,6 +67,16 @@ public class JwtTokenProvider {
     }
     public String getUsername(String token){
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+    public SafeUser getFullClaimsInfoInSafeUserClass(String token){
+        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        SafeUser actualUser = new SafeUser();
+        actualUser.setEmail(claims.getSubject());
+        actualUser.setUsername(claims.get("actualUsername",String.class));
+        actualUser.setRole(Role.valueOf(claims.get("role",String.class)));
+        Long id = Long.valueOf(claims.get("id",String.class));
+        actualUser.setId(id);
+        return actualUser;
     }
     public String resolveToken(HttpServletRequest request){
         //return request.getHeader(authorizationHeader); //для хранения токена в хедере

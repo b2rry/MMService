@@ -5,15 +5,15 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+<h3>Enter Sign In Form</h3>
 <div class="container">
     <form class="form-signin" method="post" action="/auth/login" modelAttribute="authData">
-        <h2 class="form-signin-heading">Login_test</h2>
         <p>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="email" class="form-control" placeholder="Email" required>
+            <label for="email">Email: </label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
         </p>
         <p>
-            <label for="password">Password</label>
+            <label for="password">Password: </label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
         </p>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

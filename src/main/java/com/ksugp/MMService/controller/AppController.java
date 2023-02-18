@@ -1,13 +1,18 @@
 package com.ksugp.MMService.controller;
 
 import com.ksugp.MMService.entity.SafeUser;
+import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.service.AuthService;
 import com.ksugp.MMService.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -15,25 +20,34 @@ import java.util.List;
 public class AppController {
     @Autowired
     private final UserService userService;
+    @Autowired
+    private final AuthService authService;
 
-    public AppController(UserService userService) {
+    public AppController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
     @PreAuthorize("hasAuthority('users:read')")
     @GetMapping
-    public String showServicePage(Model model) {
+    public String showServicePage(Model model, HttpServletRequest request) {
         List<SafeUser> sUsers = userService.getSafeUsersList();
+        SafeUser currentSUser = authService.getJwtTokenProvider().getFullClaimsInfoInSafeUserClass(authService.getJwtTokenProvider().resolveToken(request));
+        model.addAttribute("currentSUser", currentSUser);
         model.addAttribute("usersList",sUsers);
         return "service";
     }
     @PreAuthorize("hasAuthority('users:read')")
-    @GetMapping("/user/{userNum}/{userId}")
-    public String showUserPage(@PathVariable int userNum, @PathVariable Long userId, Model model) {
+    @GetMapping("/user/{userNum}/{userId}/{myEmail}")
+    public String showUserPage(@PathVariable int userNum, @PathVariable Long userId, Model model, @PathVariable String myEmail) {
         SafeUser sUser = userService.getSafeUser(userId, userNum);
         model.addAttribute("oneUser", sUser);
+        model.addAttribute("myEmail", myEmail);
         return "user";
     }
+
+    //------------------------------------------
+
     @PreAuthorize("hasAuthority('users:write')")
     @GetMapping("/user/add")
     public String showAddUserForm() {
@@ -45,25 +59,97 @@ public class AppController {
         userService.saveUser(safeUser);//перегруженный метод
         return "successAdd";
     }
+
+    //------------------------------------------
+
     @PreAuthorize("hasAuthority('users:write')")
-    @GetMapping("/user/change/{userId}")
-    public String showChangeUserForm(@PathVariable Long userId, Model model) {
-        model.addAttribute("user",userService.getSafeUser(userId,0));
-        return "changeUserForm";
+    @GetMapping("/user/change/{userId}/{myEmail}")
+    public String showChangeUserForm(@PathVariable Long userId, Model model, @PathVariable String myEmail) {
+        SafeUser sUser = userService.getSafeUser(userId,0);
+        if(sUser.getEmail().equals(myEmail)){
+            return "noChangeMyselfError";
+        }else {
+            model.addAttribute("user", sUser);
+            return "changeUserForm";
+        }
     }
     @PreAuthorize("hasAuthority('users:write')")
     @PostMapping("/user/change/{userId}")
     public String ChangeUser(@ModelAttribute("user") SafeUser safeUser,@PathVariable Long userId){
         safeUser.setId(userId);
-        System.out.println(safeUser);
         userService.createUser(safeUser);
         return "successChange";
     }
+
+    //------------------------------------------
+
+    @PreAuthorize("hasAuthority('users:read')")
+    @GetMapping("/user/change/my/information")
+    public String showChangeMyUserInformationForm(Model model, HttpServletRequest request) {
+        SafeUser currentSUser = authService.getJwtTokenProvider().getFullClaimsInfoInSafeUserClass(authService.getJwtTokenProvider().resolveToken(request));
+        model.addAttribute("currentSUser",userService.getSafeUser(currentSUser.getId(),0));
+        return "changeMyInformationForm";
+    }
+    @PreAuthorize("hasAuthority('users:read')")
+    @PostMapping("/user/change/my/information")
+    public String changeMyUserInformation(@ModelAttribute("user") SafeUser currentSUser, HttpServletRequest request) {
+        SafeUser currentSUserFromToken = authService.getJwtTokenProvider().getFullClaimsInfoInSafeUserClass(authService.getJwtTokenProvider().resolveToken(request));
+        currentSUser.setId(currentSUserFromToken.getId());
+        userService.changeMyInformation(currentSUser);
+        return "successChange";
+    }
+
+
+    //------------------------------------------ нужно сделать две отдельные кнопки на email и password по отдельности, тк меняются сразу два значения, либо запретить менять email
+
+    @PreAuthorize("hasAuthority('users:read')")
+    @GetMapping("/user/change/my/password")
+    public String showChangeMyUserPasswordForm(Model model, HttpServletRequest request) {
+        SafeUser currentSUser = authService.getJwtTokenProvider().getFullClaimsInfoInSafeUserClass(authService.getJwtTokenProvider().resolveToken(request));
+        model.addAttribute("currentSUser",userService.getSafeUser(currentSUser.getId(),0));
+        return "changeMyPasswordForm";
+    }
+    @PreAuthorize("hasAuthority('users:read')")
+    @PostMapping("/user/change/my/password")
+    public String changeMyUserPassword(@ModelAttribute("currentUser") User currentUser, HttpServletRequest request, HttpServletResponse response) {
+        SafeUser currentSUserFromToken = authService.getJwtTokenProvider().getFullClaimsInfoInSafeUserClass(authService.getJwtTokenProvider().resolveToken(request));
+        currentUser.setId(currentSUserFromToken.getId());
+        if(userService.changeMySecretInformation(currentUser)){
+            authService.deleteAuthCookie(response);
+            return "successPasswordChange";
+        }else{
+            return "errorPasswordChange";//change
+        }
+    }
+
+    //------------------------------------------
+
+    @PreAuthorize("hasAuthority('users:writeplus')")
+    @GetMapping("/user/change/rights/{userId}")
+    public String showChangeUserRightsForm(@PathVariable Long userId, Model model) {
+        model.addAttribute("user",userService.getSafeUser(userId,0));
+        return "changeUserRightsForm";
+    }
+    @PreAuthorize("hasAuthority('users:writeplus')")
+    @PostMapping("/user/change/rights/{userId}")
+    public String ChangeUserRights(@ModelAttribute("user") SafeUser safeUser,@PathVariable Long userId){
+        safeUser.setId(userId);
+        userService.changeUserRights(safeUser);
+        return "successChange";
+    }
+
+    //------------------------------------------
+
     @PreAuthorize("hasAuthority('users:write')")
-    @GetMapping("/user/delete/{userId}")
-    public String showDeleteUserForm(@PathVariable Long userId, Model model) {
-        model.addAttribute("userId",userId);
-        return "deleteUserForm";
+    @GetMapping("/user/delete/{userId}/{myEmail}")
+    public String showDeleteUserForm(@PathVariable Long userId, Model model, @PathVariable String myEmail) {
+        SafeUser sUser = userService.getSafeUser(userId,0);
+        if(sUser.getEmail().equals(myEmail)){
+            return "noChangeMyselfError";
+        }else {
+            model.addAttribute("userId",userId);
+            return "deleteUserForm";
+        }
     }
     @PreAuthorize("hasAuthority('users:write')")
     @PostMapping("/user/delete/{userId}")

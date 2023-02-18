@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>add_form</title>
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+</head>
+<body>
+{{#user}}
+<form action="/service/user/change/rights/{{id}}" method="POST" modelAttribute="user">
+  <h4>Change User Rights</h4>
+  <p>Id: {{id}}</p>
+  <p>Email: {{email}}</p>
+  <p>Username: {{username}}</p>
+  <br>
+  <p>
+    <label for="active_status">USER</label>
+    <input id="active_status" type="radio" name="role" value="USER" required>
+    <label for="banned_status">ADMIN</label>
+    <input id="banned_status" type="radio" name="role" value="ADMIN" required>
+  </p>
+  <button type="submit">SAVE</button>
+</form>
+{{/user}}
+<br>
+<a href="#" onclick="history.back();">Back</a>
+</body>
+</html>

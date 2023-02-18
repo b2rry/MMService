@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Signup_page</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h3>Enter Sign Up Form</h3>
+<div class="container">
+  <form class="form-signin" method="post" action="/auth/signup" modelAttribute="signupUserInfo">
+    <p>
+      <label for="email">Email: </label>
+      <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
+    </p>
+    <p>
+      <label for="username">Username: </label>
+      <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+    </p>
+    <p>
+      <label for="info">Info: </label>
+      <input type="text" id="info" name="info" class="form-control" placeholder="Info">
+    </p>
+    <br>
+    <p>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required> Amount of characters more or equals of 4.
+    </p>
+    <p>
+      <label for="passwordRepet">Confirm Password</label>
+      <input type="password" id="passwordRepet" name="passwordConfirm" class="form-control" placeholder="Password" required>
+    </p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">SAVE</button>
+  </form>
+  <br>
+  <a href="/">Main page</a>
+</div>
+</body>
+</html>

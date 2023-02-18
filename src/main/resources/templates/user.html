@@ -41,15 +41,18 @@
 
 </table>
 {{#oneUser}}
-<form action="/service/user/change/{{id}}" method="GET">
+<form action="/service/user/change/{{id}}/{{#myEmail}}{{myEmail}}{{/myEmail}}" method="GET">
   <button type="submit">Change User</button>
 </form>
-<form action="/service/user/delete/{{id}}" method="GET">
+<form action="/service/user/change/rights/{{id}}" method="GET">
+  <button type="submit">Change Rights</button>
+</form>
+<form action="/service/user/delete/{{id}}/{{#myEmail}}{{myEmail}}{{/myEmail}}" method="GET">
   <button type="submit">Delete User</button>
 </form>
 {{/oneUser}}
 <br>
-<a href="/service">Back</a>
+<a href="#" onclick="history.back();">Back</a>
 <br>
 <a href="/">Main page</a>
 </body>

@@ -16,13 +16,6 @@ public class User {
         this.role = role;
         this.status = status;
     }
-    public User(String username, String email, String info, Role role, Status status) {
-        this.username = username;
-        this.email = email;
-        this.info = info;
-        this.role = role;
-        this.status = status;
-    }
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +24,8 @@ public class User {
     private String username;
     @Column(name = "user_password")
     private String password;
+    @Transient
+    private String passwordConfirm;
     @Column(name = "user_email")
     private String email;
     @Column(name = "user_info")

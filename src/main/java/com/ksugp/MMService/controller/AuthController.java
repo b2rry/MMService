@@ -1,7 +1,9 @@
 package com.ksugp.MMService.controller;
 
 import com.ksugp.MMService.entity.AuthRequestDTO;
+import com.ksugp.MMService.entity.User;
 import com.ksugp.MMService.service.AuthService;
+import com.ksugp.MMService.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     private final AuthService authService;
+    @Autowired
+    private final UserService userService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, UserService userService) {
         this.authService = authService;
+        this.userService = userService;
     }
 
-    @GetMapping("login")
+    @GetMapping("/login")
     public String showLoginPage() {
         return "loginFormPage";
     }
@@ -38,6 +43,15 @@ public class AuthController {
         } catch (AuthenticationException e) {
             return "loginError";
         }
+    }
+    @GetMapping("/signup")
+    public String showSignupPage() {
+        return "signupFormPage";
+    }
+    @PostMapping("/signup")
+    public String signup(@ModelAttribute("signupUserInfo") User user) {
+        if(userService.signupUser(user)){return "signupSuccess";}
+        else{return "signupError";}
     }
     @PostMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response){

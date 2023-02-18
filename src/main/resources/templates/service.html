@@ -7,7 +7,19 @@
 </head>
 <body>
   <h1>Service page</h1>
-  <a href="/">Main page</a>
+  {{#currentSUser}}
+  <h4>
+      Current Logged in User:<br>
+      {{email}}, ({{role}} rights)<br>
+      Username: {{username}}
+  </h4>
+  {{/currentSUser}}
+  <form action="/service/user/change/my/information" method="GET">
+      <button type="submit">Change my information</button>
+  </form>
+  <form action="/service/user/change/my/password" method="GET">
+      <button type="submit">Change my email/password</button>
+  </form>
   <br>
   <form action="/settings/show" method="GET">
       <button type="submit">GET JSON Users (test)</button>
@@ -31,10 +43,12 @@
           <td>{{num}}</td>
           <td>{{username}}</td>
           <td>{{email}}</td>
-          <td><a href = "/service/user/{{num}}/{{id}}">Expand</a></td>
+          <td><a href = "/service/user/{{num}}/{{id}}/{{#currentSUser}}{{email}}{{/currentSUser}}">Expand</a></td>
       </tr>
       {{/usersList}}
 
   </table>
+<br>
+  <a href="/">Main page</a>
 </body>
 </html>

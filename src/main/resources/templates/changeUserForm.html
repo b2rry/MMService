@@ -24,14 +24,14 @@
     </p>
     <p>
         <label for="active_status">Active</label>
-        <input id="active_status" type="radio" name="status" value="ACTIVE">
+        <input id="active_status" type="radio" name="status" value="ACTIVE" required>
         <label for="banned_status">Banned</label>
-        <input id="banned_status" type="radio" name="status" value="BANNED">
+        <input id="banned_status" type="radio" name="status" value="BANNED" required>
     </p>
     <button type="submit">SAVE</button>
 </form>
 {{/user}}
 <br>
-<a href="/service">Back</a>
+<a href="#" onclick="history.back();">Back</a>
 </body>
 </html>
