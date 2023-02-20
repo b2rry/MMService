@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
@@ -61,9 +62,13 @@ public class JwtTokenProvider {
             throw new JwtAuthenticationException("JWT token is expired or invalid!!!", HttpStatus.UNAUTHORIZED);
         }
     }
-    public Authentication getAuthentication(String token){
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
-        return new UsernamePasswordAuthenticationToken(userDetails,"", userDetails.getAuthorities());
+    public Authentication getAuthentication(String token) throws UsernameNotFoundException{
+        try {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
+            return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        }catch (UsernameNotFoundException e){//?
+            return null;
+        }
     }
     public String getUsername(String token){
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();

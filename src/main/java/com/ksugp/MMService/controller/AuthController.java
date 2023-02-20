@@ -25,6 +25,10 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @GetMapping("/access/denied")
+    public String showAccessDeniedPage() {
+        return "accessDenied";
+    }
     @GetMapping("/login")
     public String showLoginPage() {
         return "loginFormPage";

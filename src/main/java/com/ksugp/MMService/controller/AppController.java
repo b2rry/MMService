@@ -7,6 +7,7 @@ import com.ksugp.MMService.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class AppController {
     }
     @PreAuthorize("hasAuthority('users:write')")
     @PostMapping("/user/add")
-    public String takeUserForm(@ModelAttribute("user") SafeUser safeUser){
+    public String takeUserForm(@ModelAttribute("user") SafeUser safeUser) {
         userService.saveUser(safeUser);//перегруженный метод
         return "successAdd";
     }
@@ -100,7 +101,7 @@ public class AppController {
     }
 
 
-    //------------------------------------------ нужно сделать две отдельные кнопки на email и password по отдельности, тк меняются сразу два значения, либо запретить менять email
+    //------------------------------------------
 
     @PreAuthorize("hasAuthority('users:read')")
     @GetMapping("/user/change/my/password")
@@ -114,7 +115,7 @@ public class AppController {
     public String changeMyUserPassword(@ModelAttribute("currentUser") User currentUser, HttpServletRequest request, HttpServletResponse response) {
         SafeUser currentSUserFromToken = authService.getJwtTokenProvider().getFullClaimsInfoInSafeUserClass(authService.getJwtTokenProvider().resolveToken(request));
         currentUser.setId(currentSUserFromToken.getId());
-        if(userService.changeMySecretInformation(currentUser)){
+        if(userService.changeMyPassword(currentUser)){
             authService.deleteAuthCookie(response);
             return "successPasswordChange";
         }else{
@@ -132,10 +133,13 @@ public class AppController {
     }
     @PreAuthorize("hasAuthority('users:writeplus')")
     @PostMapping("/user/change/rights/{userId}")
-    public String ChangeUserRights(@ModelAttribute("user") SafeUser safeUser,@PathVariable Long userId){
-        safeUser.setId(userId);
-        userService.changeUserRights(safeUser);
-        return "successChange";
+    public String ChangeUserRights(@ModelAttribute("user") User user,@PathVariable Long userId, HttpServletRequest request){
+        SafeUser currentSUserFromToken = authService.getJwtTokenProvider().getFullClaimsInfoInSafeUserClass(authService.getJwtTokenProvider().resolveToken(request));
+        if(userService.confirmPassword(currentSUserFromToken.getId(), user.getConfirmCheckPassword())){
+            userService.changeUserRights(userId, user.getRole());
+            return "successChange";
+        }
+        return "confirmError";
     }
 
     //------------------------------------------

@@ -20,11 +20,6 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     private UserRepository userRepository;
-
-    public JwtTokenProvider getJwtTokenProvider() {
-        return jwtTokenProvider;
-    }
-
     private JwtTokenProvider jwtTokenProvider;
     @Value("${jwt.cookieName}")
     private String cookieName;
@@ -34,7 +29,9 @@ public class AuthService {
         this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
     }
-
+    public JwtTokenProvider getJwtTokenProvider() {
+        return jwtTokenProvider;
+    }
     public String createJwtToken(AuthRequestDTO requestObj) throws AuthenticationException {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestObj.getEmail(), requestObj.getPassword()));
         User user = userRepository.findByEmail(requestObj.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
