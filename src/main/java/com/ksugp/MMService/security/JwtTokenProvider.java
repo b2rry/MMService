@@ -1,7 +1,7 @@
-package com.ksugp.MMService.Security;
+package com.ksugp.MMService.security;
 
-import com.ksugp.MMService.entity.Role;
-import com.ksugp.MMService.entity.SafeUser;
+import com.ksugp.MMService.model.Role;
+import com.ksugp.MMService.model.SafeUser;
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;

@@ -1,8 +1,8 @@
 package com.ksugp.MMService.service;
 
-import com.ksugp.MMService.Security.JwtTokenProvider;
-import com.ksugp.MMService.entity.AuthRequestDTO;
-import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.security.JwtTokenProvider;
+import com.ksugp.MMService.model.AuthRequestDTO;
+import com.ksugp.MMService.model.User;
 import com.ksugp.MMService.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
-package com.ksugp.MMService.Security;
+package com.ksugp.MMService.model;
 
-import com.ksugp.MMService.entity.Status;
-import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.model.Status;
+import com.ksugp.MMService.model.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -60,7 +60,7 @@ public class SecurityUser implements UserDetails {
         return isActive;
     }
 
-    public static UserDetails fromUser(User user){
+    public static UserDetails fromUser(User user) {
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),

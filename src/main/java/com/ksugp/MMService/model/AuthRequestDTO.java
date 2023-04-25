@@ -1,4 +1,4 @@
-package com.ksugp.MMService.entity;
+package com.ksugp.MMService.model;
 
 import lombok.Data;
 

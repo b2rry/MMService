@@ -1,12 +1,15 @@
-package com.ksugp.MMService.entity;
+package com.ksugp.MMService.model;
 
+import jakarta.validation.constraints.Email;
 import lombok.Data;
+
 
 @Data
 public class SafeUser {
     private int num = -1;
     private Long id = -1L;
     private String username = "default";
+    @Email
     private String email = "default@email";
     private String info = "-";
     private Role role = Role.USER;

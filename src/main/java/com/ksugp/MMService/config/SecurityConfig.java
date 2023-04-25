@@ -1,6 +1,6 @@
 package com.ksugp.MMService.config;
 
-import com.ksugp.MMService.Security.JwtConfigurer;
+import com.ksugp.MMService.security.JwtConfigurer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

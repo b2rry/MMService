@@ -1,6 +1,6 @@
 package com.ksugp.MMService.repository;
 
-import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

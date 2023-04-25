@@ -1,6 +1,7 @@
-package com.ksugp.MMService.Security;
+package com.ksugp.MMService.security;
 
-import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.model.SecurityUser;
+import com.ksugp.MMService.model.User;
 import com.ksugp.MMService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

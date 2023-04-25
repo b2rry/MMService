@@ -1,14 +1,12 @@
 package com.ksugp.MMService.service;
 
-import com.ksugp.MMService.entity.Role;
-import com.ksugp.MMService.entity.SafeUser;
-import com.ksugp.MMService.entity.Status;
-import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.model.Role;
+import com.ksugp.MMService.model.SafeUser;
+import com.ksugp.MMService.model.Status;
+import com.ksugp.MMService.model.User;
 import com.ksugp.MMService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -71,7 +69,6 @@ public class UserService {
 
     public void createUser(SafeUser safeUser) {
         if (safeUser.getUsername() == null || safeUser.getUsername().equals("")) safeUser.setUsername("default_value");
-        if (safeUser.getEmail() == null || safeUser.getEmail().equals("")) safeUser.setEmail("default@email");
         if (safeUser.getInfo() == null || safeUser.getInfo().equals("")) safeUser.setInfo("-");
         if (safeUser.getStatus() != Status.ACTIVE && safeUser.getStatus() != Status.BANNED)
             safeUser.setStatus(Status.BANNED);
@@ -137,7 +134,7 @@ public class UserService {
             return new User(safeUser.getUsername(), password, safeUser.getEmail(), safeUser.getInfo(), /*можно внедрить значение admin*/safeUser.getRole(), safeUser.getStatus());
         } else {
             User userBeforeChange = getUser(safeUser.getId()).get();
-            return new User(safeUser.getUsername(), userBeforeChange.getPassword(), safeUser.getEmail(), safeUser.getInfo(), userBeforeChange.getRole(), safeUser.getStatus());
+            return new User(safeUser.getUsername(), userBeforeChange.getPassword(), userBeforeChange.getEmail(), safeUser.getInfo(), userBeforeChange.getRole(), safeUser.getStatus());
         }
     }
 }

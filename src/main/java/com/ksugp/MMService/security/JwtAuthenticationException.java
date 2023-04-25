@@ -1,4 +1,4 @@
-package com.ksugp.MMService.Security;
+package com.ksugp.MMService.security;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,5 @@
-package com.ksugp.MMService.Security;
+package com.ksugp.MMService.security;
 
-import com.ksugp.MMService.service.AuthService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

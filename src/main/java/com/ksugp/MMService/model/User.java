@@ -1,21 +1,21 @@
-package com.ksugp.MMService.entity;
+package com.ksugp.MMService.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import javax.validation.constraints.Email;
 
 @Entity
 @Data
 //@Table(name = "users_table")
 @Table(name = "users_table",
-        uniqueConstraints={
+        uniqueConstraints = {
                 @UniqueConstraint(columnNames = "user_email")
         }
 )
 
 public class User {
-    public User(){}
+    public User() {
+    }
+
     public User(String username, String password, String email, String info, Role role, Status status) {
         this.username = username;
         this.password = password;
@@ -24,6 +24,7 @@ public class User {
         this.role = role;
         this.status = status;
     }
+
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,7 @@
 package com.ksugp.MMService.controller;
 
-import com.ksugp.MMService.entity.AuthRequestDTO;
-import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.model.AuthRequestDTO;
+import com.ksugp.MMService.model.User;
 import com.ksugp.MMService.service.AuthService;
 import com.ksugp.MMService.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;

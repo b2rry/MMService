@@ -1,19 +1,18 @@
 package com.ksugp.MMService.controller;
 
-import com.ksugp.MMService.entity.SafeUser;
-import com.ksugp.MMService.entity.User;
+import com.ksugp.MMService.model.SafeUser;
+import com.ksugp.MMService.model.User;
 import com.ksugp.MMService.service.AuthService;
 import com.ksugp.MMService.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -54,9 +53,10 @@ public class AppController {
     public String showAddUserForm() {
         return "addUserForm";
     }
+
     @PreAuthorize("hasAuthority('users:write')")
     @PostMapping("/user/add")
-    public String takeUserForm(@ModelAttribute("user") SafeUser safeUser) {
+    public String takeUserForm(@Valid @ModelAttribute("user") SafeUser safeUser) {
         userService.saveUser(safeUser);//перегруженный метод
         return "successAdd";
     }
@@ -144,7 +144,7 @@ public class AppController {
 
     //------------------------------------------
 
-    @PreAuthorize("hasAuthority('users:write')")
+    @PreAuthorize("hasAuthority('users:writeplus')")
     @GetMapping("/user/delete/{userId}/{myEmail}")
     public String showDeleteUserForm(@PathVariable Long userId, Model model, @PathVariable String myEmail) {
         SafeUser sUser = userService.getSafeUser(userId,0);
@@ -155,7 +155,7 @@ public class AppController {
             return "deleteUserForm";
         }
     }
-    @PreAuthorize("hasAuthority('users:write')")
+    @PreAuthorize("hasAuthority('users:writeplus')")
     @PostMapping("/user/delete/{userId}")
     public String deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
