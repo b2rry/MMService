@@ -25,6 +25,8 @@ public class User {
         this.status = status;
     }
 
+    @Transient
+    private int mid;
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,5 +49,12 @@ public class User {
     @Column(name = "user_status")
     @Enumerated(value = EnumType.STRING)
     private Status status;
-
+    @Column(name = "user_latitude")
+    private double latitude;
+    @Column(name = "user_longitude")
+    private double longitude;
+    @Column(name = "user_timestamp")
+    private Long timestamp;
+    @Column(name = "user_color")
+    private String color;
 }

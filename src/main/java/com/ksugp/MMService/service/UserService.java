@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UserService {
@@ -120,6 +122,14 @@ public class UserService {
         user.setStatus(Status.ACTIVE);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
         user.setPassword(encoder.encode(user.getPassword()));
+        user.setLatitude(0);
+        user.setLongitude(0);
+        user.setTimestamp(Instant.now().toEpochMilli()/1000);
+        Random random = new Random();
+        int max = 0xFFFFFF;
+        int number = random.nextInt(max + 1);
+        String hexNumber = String.format("%06X", number);
+        user.setColor("#"+hexNumber);
         saveUser(user);
         return true;
     }

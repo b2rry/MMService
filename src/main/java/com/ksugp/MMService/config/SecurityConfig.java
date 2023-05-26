@@ -49,6 +49,7 @@ public class SecurityConfig{
                 .requestMatchers("/*").permitAll()
                 .requestMatchers("/css/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/mobile/login").permitAll()
 //                .requestMatchers(HttpMethod.GET,"/service/**").hasAnyRole(Role.ADMIN.name(),Role.USER.name()) без пермишнов
 //                .requestMatchers(HttpMethod.POST,"/service/**").hasRole(Role.ADMIN.name())
 //                .requestMatchers(HttpMethod.DELETE,"/service/**").hasRole(Role.ADMIN.name())

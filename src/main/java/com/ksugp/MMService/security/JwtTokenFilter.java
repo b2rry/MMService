@@ -48,6 +48,7 @@ public class JwtTokenFilter extends GenericFilterBean {
             cookie.setMaxAge(0);
             cookie.setPath("/");
             ((HttpServletResponse)response).addCookie(cookie);
+            ((HttpServletResponse)response).addHeader("MESSAGE", "AUTH_ERROR");
 
             SecurityContextHolder.clearContext();
             ((HttpServletResponse)response).sendError(e.getHttpStatus().value());

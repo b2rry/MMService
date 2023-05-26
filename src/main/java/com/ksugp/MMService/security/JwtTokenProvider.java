@@ -86,6 +86,15 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request){
         //return request.getHeader(authorizationHeader); //для хранения токена в хедере
         Cookie cookie = WebUtils.getCookie(request, cookieName);
-        return cookie != null ? cookie.getValue() : null;
+        if(cookie == null){
+            System.out.println(request.getParameter("token"));
+            if(request.getParameter("token") == null || request.getParameter("token").equals("")){
+                return null;
+            }else{
+                return request.getParameter("token");
+            }
+        }else{
+            return cookie.getValue();
+        }
     }
 }

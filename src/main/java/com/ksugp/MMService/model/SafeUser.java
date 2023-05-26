@@ -14,6 +14,7 @@ public class SafeUser {
     private String info = "-";
     private Role role = Role.USER;
     private Status status = Status.ACTIVE;
+    private String token = "NOTOKEN";
 
     public SafeUser(int num, Long id, String username, String email, String info, Role role, Status status) {
         this.num = num;
