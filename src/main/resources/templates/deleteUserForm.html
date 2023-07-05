@@ -6,12 +6,18 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <h3>Confirm deletion:</h3>
-    {{#userId}}
-    <form action="/service/user/delete/{{userId}}" method="POST">
-        <button type="submit">Delete</button>
-    </form>
-    {{/userId}}
-    <a href="#" onclick="history.back();">Back</a>
+<div class="container">
+    <div class="column">
+        <h3>Confirm deletion:</h3>
+        {{#userId}}
+        <form action="/service/user/delete/{{userId}}" method="POST">
+            <button type="submit">Delete</button>
+        </form>
+        {{/userId}}
+        <div style="margin-top: 3rem;">
+            <a href="#" onclick="history.back();" style="font-size: 1.7rem;">Back</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

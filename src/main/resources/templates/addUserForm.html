@@ -6,25 +6,31 @@
     <link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
-  <form action="/service/user/add" method="POST" modelAttribute="user">
-      <h4>Fill the User form</h4>
-      <p>
-          <label for="username">Username</label>
-          <input id="username" type="text" name="username" required>
-      </p>
-      <p>
-          <label for="email">Email</label>
-          <input id="email" type="text" name="email" required>
-      </p>
-      <p>
-          <label for="active_status">Active</label>
-          <input id="active_status" type="radio" name="status" value="ACTIVE">
-          <label for="banned_status">Banned</label>
-          <input id="banned_status" type="radio" name="status" value="BANNED">
-      </p>
-    <button type="submit">SAVE</button>
-  </form>
-  <br>
-  <a href="#" onclick="history.back();">Back</a>
+<div class="container">
+    <div class="column">
+        <form action="/service/user/add" method="POST" modelAttribute="user">
+            <h4>Fill the User form</h4>
+            <p>
+                <label for="username">Username</label>
+                <input id="username" type="text" name="username" required>
+            </p>
+            <p>
+                <label for="email">Email</label>
+                <input id="email" type="text" name="email" required>
+            </p>
+            <p>
+                <label for="active_status">Active</label>
+                <input id="active_status" type="radio" name="status" value="ACTIVE">
+                <label for="banned_status">Banned</label>
+                <input id="banned_status" type="radio" name="status" value="BANNED">
+            </p>
+            <button type="submit">SAVE</button>
+        </form>
+        <br>
+        <div style="margin-top: 3rem;">
+            <a href="#" onclick="history.back();" style="font-size: 1.7rem;">Back</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

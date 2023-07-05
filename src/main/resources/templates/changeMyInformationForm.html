@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>changeMy_form</title>
-  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+    <meta charset="UTF-8">
+    <title>changeMy_form</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
-{{#currentSUser}}
-<form action="/service/user/change/my/information" method="POST" modelAttribute="currentSUser">
-  <h4>Change your information</h4>
-  <p>Id: {{id}}</p>
-  <p>
-    <label for="username">Username:</label>
-    <input id="username" type="text" name="username" value="{{username}}" required>
-  </p>
-  <p>
-    <label for="info">Info:</label>
-    <input id="info" type="text" name="info" value="{{info}}" required>
-  </p>
-  <button type="submit">SAVE</button>
-</form>
-{{/currentSUser}}
-<br>
-<a href="#" onclick="history.back();">Back</a>
+<div class="container">
+    <div class="column">
+        {{#currentSUser}}
+        <form action="/service/user/change/my/information" method="POST" modelAttribute="currentSUser">
+            <h4>Change your information</h4>
+            <p>Id: {{id}}</p>
+            <p>
+                <label for="username">Username:</label>
+                <input id="username" type="text" name="username" value="{{username}}" required>
+            </p>
+            <p>
+                <label for="info">Info:</label>
+                <input id="info" type="text" name="info" value="{{info}}" required>
+            </p>
+            <button type="submit">SAVE</button>
+        </form>
+        {{/currentSUser}}
+        <br>
+        <div style="margin-top: 3rem;">
+            <a href="#" onclick="history.back();" style="font-size: 1.7rem;">Back</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

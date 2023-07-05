@@ -1,51 +1,35 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>main_page</title>
-  <link rel="stylesheet" href="/css/styles.css">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main_page</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<header>
-  <h1>MMService</h1>
-  <div>
-  <p>Authorization:</p>
-    <form action="/auth/signup" method="GET">
-      <button type="submit">Sign Up</button>
-    </form>
-  <form action="/auth/login" method="GET">
-    <button type="submit">Sign In</button>
-  </form>
-  <form action="/auth/logout" method="POST">
-    <button type="submit">Sign Out</button>
-  </form>
-  </div>
-  <nav>
-      <h3><a href="/service">ServicePage</a></h3>
-  </nav>
-</header>
-<main>
-  <article>
-    <section>
-      <h2></h2>
-      <p></p>
-      <p></p>
-    </section>
-    <section>
-      <h2></h2>
-      <p></p>
-    </section>
-    <section>
-      <h2></h2>
-      <p></p>
-    </section>
-  </article>
-</main>
-<footer>
-  <p></p>
-</footer>
-<!-- сюда можно подключить jquery <script src="scripts/app.js" defer></script> -->
+<div class="container">
+    <div class="column">
+        <h1>MMService</h1>
+        <div class="row">
+            <form action="/auth/signup" method="GET">
+                <button type="submit">Sign Up</button>
+            </form>
+            <form action="/auth/login" method="GET">
+                <button type="submit">Sign In</button>
+            </form>
+            <form action="/auth/logout" method="POST">
+                <button type="submit">Sign Out</button>
+            </form>
+        </div>
+        <nav>
+            <div style="margin-top: 3rem;">
+                <h3><a href="/service" style="font-size: 1.7rem;">ServicePage</a></h3>
+            </div>
+        </nav>
+        <footer>
+            <p></p>
+        </footer>
+    </div>
+</div>
 </body>
 </html>

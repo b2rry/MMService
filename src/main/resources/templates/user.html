@@ -1,59 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Users_output</title>
-  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+    <meta charset="UTF-8">
+    <title>Users_output</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
-{{#oneUser}}
-<h2>User {{num}}</h2>
-{{/oneUser}}
-<table>
+<div class="container">
+    <div class="column">
+        {{#oneUser}}
+        <h1>User {{num}}</h1>
+        {{/oneUser}}
+        <table>
 
-  {{#oneUser}}
-  <tr>
-    <td>Id </td>
-    <td>'{{id}}'</td>
-  </tr>
-  <tr>
-    <td>Username </td>
-    <td>'{{username}}'</td>
-  </tr>
-  <tr>
-    <td>Email </td>
-    <td>'{{email}}'</td>
-  </tr>
-  <tr>
-    <td>Info </td>
-    <td>'{{info}}'</td>
-  </tr>
-  <tr>
-    <td>Role </td>
-    <td>'{{role}}'</td>
-  </tr>
-  <tr>
-    <td>Status </td>
-    <td>'{{status}}'</td>
-  </tr>
+            {{#oneUser}}
+            <tr>
+                <td>Id</td>
+                <td>'{{id}}'</td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td>'{{username}}'</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>'{{email}}'</td>
+            </tr>
+            <tr>
+                <td>Info</td>
+                <td>'{{info}}'</td>
+            </tr>
+            <tr>
+                <td>Role</td>
+                <td>'{{role}}'</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>'{{status}}'</td>
+            </tr>
 
-  {{/oneUser}}
+            {{/oneUser}}
 
-</table>
-{{#oneUser}}
-<form action="/service/user/change/{{id}}/{{#myEmail}}{{myEmail}}{{/myEmail}}" method="GET">
-  <button type="submit">Change User</button>
-</form>
-<form action="/service/user/change/rights/{{id}}" method="GET">
-  <button type="submit">Change Rights</button>
-</form>
-<form action="/service/user/delete/{{id}}/{{#myEmail}}{{myEmail}}{{/myEmail}}" method="GET">
-  <button type="submit">Delete User</button>
-</form>
-{{/oneUser}}
-<br>
-<a href="#" onclick="history.back();">Back</a>
-<br>
-<a href="/">Main page</a>
+        </table>
+        {{#oneUser}}
+        <div class="row">
+            <form action="/service/user/change/{{id}}/{{#myEmail}}{{myEmail}}{{/myEmail}}" method="GET">
+                <button type="submit">Change User</button>
+            </form>
+            <form action="/service/user/change/rights/{{id}}" method="GET">
+                <button type="submit">Change Rights</button>
+            </form>
+            <form action="/service/user/delete/{{id}}/{{#myEmail}}{{myEmail}}{{/myEmail}}" method="GET">
+                <button type="submit">Delete User</button>
+            </form>
+        </div>
+        {{/oneUser}}
+        <br>
+        <div style="margin-top: 3rem;">
+            <a href="#" onclick="history.back();" style="font-size: 1.7rem;">Back</a>
+            <br>
+            <a href="/" style="font-size: 1.7rem;">Main page</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

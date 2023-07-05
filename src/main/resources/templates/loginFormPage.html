@@ -5,21 +5,26 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h3>Enter Sign In Form</h3>
 <div class="container">
-    <form class="form-signin" method="post" action="/auth/login" modelAttribute="authData">
-        <p>
-            <label for="email">Email: </label>
-            <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
-        </p>
-        <p>
-            <label for="password">Password: </label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        </p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
-    <br>
-    <a href="/">Main page</a>
+    <div class="column">
+        <h3>Enter Sign In Form</h3>
+        <form class="form-signin" method="post" action="/auth/login" modelAttribute="authData">
+            <p>
+                <label for="email">Email: </label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
+            </p>
+            <p>
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                       required>
+            </p>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+        <br>
+        <div style="margin-top: 3rem;">
+            <a href="/" style="font-size: 1.7rem;">Main page</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

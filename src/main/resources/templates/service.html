@@ -6,45 +6,55 @@
     <link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
-  <h1>Service page</h1>
-  {{#currentSUser}}
-  <h4>
-      Current Logged in User:<br>
-      {{email}}, ({{role}} rights)<br>
-      Username: {{username}}
-  </h4>
-  {{/currentSUser}}
-  <form action="/service/user/change/my/information" method="GET">
-      <button type="submit">Change my information</button>
-  </form>
-  <form action="/service/user/change/my/password" method="GET">
-      <button type="submit">Change my password</button>
-  </form>
-  <br>
-  <h2>Users</h2>
-  <form action="/service/user/add" method="GET">
-      <button type="submit">Add User</button>
-  </form>
-  <table>
+<div class="container">
+    <div class="column">
+        <h1>Service page</h1>
+        {{#currentSUser}}
+        <h4>
+            Current Logged in User:<br>
+            {{email}}, ({{role}} rights)<br>
+            Username: {{username}}
+        </h4>
+        <div class="row">
+            {{/currentSUser}}
+            <form action="/service/user/change/my/information" method="GET">
+                <button type="submit">Change my information</button>
+            </form>
+            <form action="/service/user/change/my/password" method="GET">
+                <button type="submit">Change my password</button>
+            </form>
+        </div>
+        <br>
+        <div class="row">
+            <h2>Users</h2>
+            <form action="/service/user/add" method="GET">
+                <button type="submit">Add User</button>
+            </form>
+        </div>
+        <table>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            {{#usersList}}
+            <tr>
+                <td>{{num}}</td>
+                <td>{{username}}</td>
+                <td>{{email}}</td>
+                <td><a href="/service/user/{{num}}/{{id}}/{{#currentSUser}}{{email}}{{/currentSUser}}">Expand</a></td>
+            </tr>
+            {{/usersList}}
 
-      <tr>
-          <th>Number</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Action</th>
-      </tr>
-
-      {{#usersList}}
-      <tr>
-          <td>{{num}}</td>
-          <td>{{username}}</td>
-          <td>{{email}}</td>
-          <td><a href = "/service/user/{{num}}/{{id}}/{{#currentSUser}}{{email}}{{/currentSUser}}">Expand</a></td>
-      </tr>
-      {{/usersList}}
-
-  </table>
-<br>
-  <a href="/">Main page</a>
+        </table>
+        <br>
+        <div class="row">
+            <div style="margin-top: 3rem;">
+                <a href="/" style="font-size: 1.7rem;">Main page</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
